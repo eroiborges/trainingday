@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: headerdemo
+  name: headerdemo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: headerdemo
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: headerdemo
+    spec:
+      containers:
+      - image: acrbytraining.azurecr.io/getheaderspython:v1
+        name: getheaderspython
+        resources: {}
+      imagePullSecrets:
+      - name: regcred        
+status: {}

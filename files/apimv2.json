@@ -1,0 +1,26 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "resources": [
+        {
+            "type": "Microsoft.ApiManagement/service",
+            "apiVersion": "2023-03-01-preview",
+            "name": "apim-demolab",
+            "location": "centralus",
+            "sku": {
+                "name": "StandardV2",
+                "capacity": 1
+            },
+            "zones": [],
+            "identity": {"type":"SystemAssigned"},
+            "tags": [],
+            "properties": {
+                "publisherEmail": "demo@lab.com",
+                "publisherName": "Lab Demo",
+                "customProperties": {}
+            },
+            "resources": [],
+            "dependsOn": []
+        }
+    ]
+}

@@ -1,0 +1,189 @@
+openapi: 3.0.2
+servers:
+  - url: /accountTest/v3
+info:
+  description: Este exemplo permitirá realizar um teste de autorização OAuth2
+  version: 1.0.0
+  title: Account Test - OpenAPI 3.0
+tags:
+  - name: account
+    description: Tudo sobre suas Contas
+paths:
+  /account:
+    post:
+      tags:
+        - account
+      summary: Adiciona nova conta
+      description: Adiciona nova conta
+      operationId: addAccount
+      responses:
+        '201':
+          description: operação bem-sucedida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '405':
+          description: Parâmetro inválido
+      security:
+        - accountTestOauth2:
+            - accountTest-account-add
+      requestBody:
+        description: Cria uma nova conta
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account_Create'
+    put:
+      tags:
+        - account
+      summary: Atualiza uma conta existente
+      description: Atualiza uma conta existente por Id
+      operationId: updateAccount
+      responses:
+        '200':
+          description: Operação bem-sucedida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: Id fornecido inválido
+        '404':
+          description: Conta não encontrada
+        '405':
+          description: Erro de validação
+      security:
+        - accountTestOauth2:
+            - accountTest-account-update
+      requestBody:
+        description: Atualiza uma conta existente
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account_Update'
+  /account/{accountId}:
+    get:
+      tags:
+        - account
+      summary: Encontra conta por Id
+      description: Retorna uma conta
+      operationId: getAccountById
+      parameters:
+        - name: accountId
+          in: path
+          description: Id da conta a ser retornada
+          required: true
+          example: 1000
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: operação bem-sucedida
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '400':
+          description: Id fornecido inválido
+        '404':
+          description: Conta não encontrada
+      security:
+        - accountTestOauth2:
+            - accountTest-account-getById
+    delete:
+      tags:
+        - account
+      summary: Exclui uma conta
+      description: ''
+      operationId: deleteAccount
+      parameters:
+        - name: accountId
+          in: path
+          description: Id da conta a ser excluída
+          required: true
+          example: 1000
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Conta excluída
+        '400':
+          description: Valor de conta inválido
+      security:
+        - accountTestOauth2:
+            - accountTest-account-delete
+components:
+  schemas:
+    Account:
+      required:
+        - name
+      properties:
+        id:
+          type: integer
+          description: Identificador da conta
+          format: int64
+          example: 1000
+        name:
+          type: string
+          description: Nome da conta
+          example: billing Account
+        status:
+          type: string
+          description: status da conta
+          enum:
+            - active
+            - inactive
+      type: object
+    Account_Create:
+      required:
+        - name
+        - photoUrls
+      properties:
+        name:
+          type: string
+          description: Nome da conta
+          example: billing Account
+        status:
+          type: string
+          description: status da conta
+          enum:
+            - active
+            - inactive
+      type: object
+    Account_Update:
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          description: Identificador da conta
+          format: int64
+          example: 1000
+        name:
+          type: string
+          description: Nome da conta
+          example: billing Account
+        status:
+          type: string
+          description: status da conta
+          enum:
+            - active
+            - inactive
+      type: object
+  securitySchemes:
+    accountTestOauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://login.microsoftonline.com/da99a1ed-6dc5-4ac9-809a-bb584f72b720/oauth2/v2.0/token
+          scopes:
+            accountTest-account-add: criar conta
+            accountTest-account-delete: excluir conta
+            accountTest-account-update: atualizar conta
+            accountTest-account-getById: consultar conta por Id
