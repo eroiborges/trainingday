@@ -21,6 +21,11 @@ Todo o contexto do treinamento é baseado na documentação do Microsoft Azure, 
 * [Terraform CAF EnterpriseScale](https://github.com/Azure/terraform-azurerm-caf-enterprise-scale)
 * [Azure Verified Modules](https://azure.github.io/Azure-Verified-Modules/)
 
+## O que você achou do treinamento?
+
+Conta para nós o que você gostou e o que você sentiu falta no treinamento para que possamos preparar um novo evento ainda mais legal.
+
+  * [Formulário Modernização](https://forms.office.com/r/vUpN9YpCmq)
 
 ## instruções iniciais
 
